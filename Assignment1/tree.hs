@@ -1,8 +1,8 @@
 module Tree where
 
-
 --
 -- * Part 1: Binary trees
+-- Authors: Samuel Cooney - cooneys, Ethan Braun - braune
 --
 
 -- | Integer-labeled binary trees.
