@@ -121,8 +121,8 @@ macros :: Prog -> [Macro]
 macros []                = []
 macros (Pen _ : t)       = macros t
 macros (Call _ _ : t)    = macros t
-macros (Move _ _ : t)    = macros t
-macros ((_ _ v _) : t) = v : macros t
+macros (Move _ : t)    = macros t
+macros (Define m _ _ : t) = m : macros t
 
 
 
