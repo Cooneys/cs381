@@ -53,7 +53,7 @@ data Expr = Vari Var
   deriving (Eq,Show)
 
 data Cmd = Pen Mode
-         | Move ( Expr , Expr )
+         | Move Expr Expr
          | Define Macro [Var] Prog
          | Call Macro [Expr]
   deriving (Eq,Show)
@@ -78,7 +78,7 @@ type Prog = [Cmd]
 --
 
 line :: Cmd
-line = Define "line" ["x1","y1","x2","y2"] [Pen Up, Move ( Vari "x1", Vari "y1"), Pen Down, Move (Vari "x2", Vari "y2"), Pen Up]
+line = Define "line" ["x1","y1","x2","y2"] [Pen Up, Move (Vari "x1") (Vari "y1"), Pen Down, Move (Vari "x2") (Vari "y2"), Pen Up]
 
 --
 -- Task 3
@@ -121,7 +121,7 @@ macros :: Prog -> [Macro]
 macros []                 = []
 macros (Pen _ : t)        = macros t
 macros (Call _ _ : t)     = macros t
-macros (Move _ : t)       = macros t
+macros (Move _ _ : t)       = macros t
 macros (Define m _ _ : t) = m : macros t
 
 --
@@ -130,11 +130,12 @@ macros (Define m _ _ : t) = m : macros t
 -- Define a haskell function pretty :: prog -> string  that pretty prints a minilogo program.
 -- Transform the abstract syntax into concrete syntax
 --
+
 prettyExpr :: [Expr] -> String
 prettyExpr []           = ""
-prettyExpr (Vari v: t)  = v ++ prettyExpr t
-prettyExpr (Numb n: t)  = show n ++ prettyExpr t
-prettyExpr (Add e x: t) = prettyExpr [e] ++ prettyExpr [x] ++ prettyExpr t
+prettyExpr (Vari v: t)  = "(" ++ v ++ ") " ++ prettyExpr t
+prettyExpr (Numb n: t)  = show n ++ " " ++ prettyExpr t
+prettyExpr (Add e x: t) = "( " ++ prettyExpr [e] ++ "+ " ++ prettyExpr [x] ++ ") " ++ prettyExpr t
 
 prettyVar :: [Var] -> String
 prettyVar []      = ""
@@ -142,35 +143,19 @@ prettyVar (v : t) = v ++ ", " ++ prettyVar t
 
 pretty :: Prog -> String
 pretty []                 = "\n"
-pretty (Pen m : t)        = "\nPen " ++ show m ++ " " ++ pretty t
-pretty (Call m x : t)     = "\nCall " ++ m ++ " " ++ prettyExpr x ++ pretty t
-pretty (Move x : t)       = "\nMove " ++ pretty t
+pretty (Pen m : t)        = "\nPen " ++ show m ++ " " ++ ";" ++ pretty t
+pretty (Call m x : t)     = "\nCall " ++ m ++ " " ++ prettyExpr x ++ ";" ++ pretty t
+pretty (Move e x : t)     = "\nMove " ++ prettyExpr [e] ++ prettyExpr [x] ++ ";" ++ pretty t
 pretty (Define m v p : t) = "\nDefine " ++ m ++ " " ++ prettyVar v ++ pretty p ++ " " ++ pretty t
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--
 -- Task 7
+--
 
 
-
-
+--
 -- Task 8
-
+--
 
 
 
