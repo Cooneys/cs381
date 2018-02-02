@@ -28,7 +28,11 @@ import Prelude hiding (Num)
 --        |  call macro ( expr* )
 --
 
+--
+-- Task 1
+--
 -- Encode the grammar as a set of Haskell data types
+--
 
 type Num = Int
 
@@ -36,8 +40,9 @@ type Var = [Char]
 
 type Macro = [Char]
 
-
+--
 -- Pen status, down is drawing, up is not drawing
+--
 
 data Mode = Down | Up
   deriving (Eq,Show)
@@ -55,11 +60,16 @@ data Cmd = Pen Mode
 
 type Prog = [Cmd]
 
+--
 -- Task 2
 --
 -- Concrete MiniLogo syntax:
 --
--- define line (x1, y1, x2, y2) {
+ Andrew, 
+I hope your holidays were great! Since its a new term we were wondering if we could move our weekly meeting time earlier from 1:50 to 2:10 on Tuesdays to 1:30 to 1:50? Please let us know if this works out and when you plan on holding the first meeting. 
+
+Thanks,
+Avi, Tyler, Sam -- define line (x1, y1, x2, y2) {
 --    pen up; move (x1, y1)
 --    pen down; move (x2, y2)
 --    pen up;
@@ -74,6 +84,7 @@ type Prog = [Cmd]
 line :: Cmd
 line = Define "line" ["x1","y1","x2","y2"] [Pen Up, Move ( Vari "x1", Vari "y1"), Pen Down, Move (Vari "x2", Vari "y2"), Pen Up]
 
+--
 -- Task 3
 --
 -- Concrete MiniLogo syntax:
@@ -92,9 +103,30 @@ line = Define "line" ["x1","y1","x2","y2"] [Pen Up, Move ( Vari "x1", Vari "y1")
 nix :: Cmd
 nix = Define "nix" ["x", "y", "w", "h"] [Call "line" [Vari "x", Vari "y", Add (Vari "x") (Vari "w"), Add (Vari "y") (Vari "h")], Call "line" [Add (Vari "x") (Vari "h"), Vari "y", Vari "x", Add (Vari "y") (Vari "h")]]
 
+--
+-- Task 4
+--
 -- Define a Haskell Function steps :: Int -> Prog that constructs a  MiniLogo program that
 -- draws a staircase of n steps startign from (0, 0). 
+--
 
 steps :: Int -> Prog
 steps 0 = []
-steps i = Call "line" [Numb i, Numb i, Numb i, Numb (i-1)] : Call "line" [Numb i, Numb (i-1), Numb (i-1), Numb (i-1)] : steps (i-1)
+steps i = Call "line" [Numb i, Numb i, Numb (i-1), Numb i] : Call "line" [Numb (i-1), Numb i, Numb (i-1), Numb (i-1)] : steps (i-1)
+
+--
+-- Task 5
+--
+-- Define a haskell function macros :: Prog -> [Macro] that returns a list of all the names
+-- Of all the macros that are define anywhere in a given MiniLogo program.
+--
+
+
+
+
+
+
+
+
+
+
