@@ -65,11 +65,7 @@ type Prog = [Cmd]
 --
 -- Concrete MiniLogo syntax:
 --
- Andrew, 
-I hope your holidays were great! Since its a new term we were wondering if we could move our weekly meeting time earlier from 1:50 to 2:10 on Tuesdays to 1:30 to 1:50? Please let us know if this works out and when you plan on holding the first meeting. 
-
-Thanks,
-Avi, Tyler, Sam -- define line (x1, y1, x2, y2) {
+-- define line (x1, y1, x2, y2) {
 --    pen up; move (x1, y1)
 --    pen down; move (x2, y2)
 --    pen up;
@@ -121,6 +117,9 @@ steps i = Call "line" [Numb i, Numb i, Numb (i-1), Numb i] : Call "line" [Numb (
 -- Of all the macros that are define anywhere in a given MiniLogo program.
 --
 
+macros :: Program -> [Macro]
+macros [] = []
+macros ( 
 
 
 
