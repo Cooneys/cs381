@@ -117,9 +117,12 @@ steps i = Call "line" [Numb i, Numb i, Numb (i-1), Numb i] : Call "line" [Numb (
 -- Of all the macros that are define anywhere in a given MiniLogo program.
 --
 
-macros :: Program -> [Macro]
-macros [] = []
-macros ( 
+macros :: Prog -> [Macro]
+macros []                = []
+macros (Pen _ : t)       = macros t
+macros (Call _ _ : t)    = macros t
+macros (Move _ _ : t)    = macros t
+macros ((_ _ v _) : t) = v : macros t
 
 
 
