@@ -124,6 +124,33 @@ macros (Call _ _ : t)    = macros t
 macros (Move _ : t)    = macros t
 macros (Define m _ _ : t) = m : macros t
 
+--
+-- Task 6
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Task 7
+
+
+
+
+-- Task 8
 
 
 
