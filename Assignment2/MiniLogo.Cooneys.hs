@@ -55,15 +55,39 @@ data Cmd = Pen Mode
 
 type Prog = [Cmd]
 
+-- Task 2
+--
+-- Concrete MiniLogo syntax:
+--
+-- define line (x1, y1, x2, y2) {
+--    pen up; move (x1, y1)
+--    pen down; move (x2, y2)
+--    pen up;
+-- }
+--
 -- Define a MiniLogo macro line (x1,y1,x2,y2) that (starting from anywhere on the canvas) 
 -- draws a line segment from (x1,y1) to (x2,y2)
+--
+-- Abstract MiniLogo syntax:
+--
 
 line :: Cmd
 line = Define "line" ["x1","y1","x2","y2"] [Pen Up, Move ( Vari "x1", Vari "y1"), Pen Down, Move (Vari "x2", Vari "y2"), Pen Up]
 
+-- Task 3
+--
+-- Concrete MiniLogo syntax:
+--
+-- define nix (x, y, w, h) {
+--    line(x, y, x + w, y + h)
+--    line(x, y + h, x + w, y)
+-- }
 -- Use the line macro you just defined to define a new MiniLogo macro nix (x,y,w,h) that 
 -- draws a big “X” of width w and height h, starting from position (x,y). Your definition 
 -- should not contain any move commands.
+--
+-- Abstract MiniLogo syntax
+--
 
 nix :: Cmd
 nix = Define "nix" ["x", "y", "w", "h"] [Call "line" [Vari "x", Vari "y", Add (Vari "x") (Vari "w"), Add (Vari "y") (Vari "h")], Call "line" [Add (Vari "x") (Vari "h"), Vari "y", Vari "x", Add (Vari "y") (Vari "h")]]
@@ -73,4 +97,4 @@ nix = Define "nix" ["x", "y", "w", "h"] [Call "line" [Vari "x", Vari "y", Add (V
 
 steps :: Int -> Prog
 steps 0 = []
-steps i = [Call "line" [Numb i, Numb i, Numb
+steps i = Call "line" [Numb i, Numb i, Numb i, Numb (i-1)] : Call "line" [Numb i, Numb (i-1), Numb (i-1), Numb (i-1)] : steps (i-1)
