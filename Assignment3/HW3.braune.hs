@@ -8,6 +8,11 @@ import Render
 -- * Semantics of MiniMiniLogo
 --
 
+-- Authors:
+--   Ethan Braun (braune)
+--   Samuel Cooney (cooneys)
+
+
 -- NOTE:
 --   * MiniMiniLogo.hs defines the abstract syntax of MiniMiniLogo and some
 --     functions for generating MiniMiniLogo programs. It contains the type
