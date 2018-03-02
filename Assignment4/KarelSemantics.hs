@@ -34,8 +34,10 @@ stmt PutBeeper  _ w r = let e = isEmpty r
                              (True, False)  -> Error ("Out of beepers")
                              (True, True)   -> Error ("Out of beepers and beeper already at: " ++ show (getPos r)) 
 stmt (Turn d)   _ w r = OK w (setFacing (cardTurn d (getFacing r)) r) 
-stmt _ _ _ _ = undefined
-    
+stmt (Call m)   d w r = case lookup m d of
+                             (Just s) -> stmt s d w r
+                             nothing  -> Error (m ++ " is not a defined Macro.")
+stmt (Iterate n s) d w r = 
 -- | Run a Karel program.
 prog :: Prog -> World -> Robot -> Result
 prog (m,s) w r = stmt s m w r
