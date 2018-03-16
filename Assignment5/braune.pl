@@ -93,11 +93,11 @@ ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
 
 
 % Extra credit: Define the predicate `related/2`.
-related(X, Y) :- parent(X, Y).
-related(X, Y) :- aunt(X, Y).
-related(X, Y) :- uncle(X, Y).
-related(X, Y) :- ancestor_(X, Y).
-related(X, Y) :- ancestor_(X, Z), ancestor_(Z, Y).
+%related(X, Y) :- parent(X, Y).
+%related(X, Y) :- aunt(X, Y).
+%related(X, Y) :- uncle(X, Y).
+%related(X, Y) :- ancestor_(X, Y).
+%related(X, Y) :- ancestor_(X, Z), ancestor_(Z, Y).
 
 
 
