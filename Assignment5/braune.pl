@@ -88,9 +88,6 @@ cousin(X, Y) :- child(X, Z), uncle(Z, Y).
 
 
 % 9. Define the predicate `ancestor/2`.
-%ancestor_(X, Y) :- parent(X, Y).
-%ancestor(X, Y) :- ancestor_(X, Y).
-%ancestor(X, Y) :- ancestor_(X, Z), ancestor_(Z, Y).
 ancestor(X, Y) :- parent(X, Y).
 ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
 
@@ -110,9 +107,29 @@ related(X, Y) :- ancestor_(X, Z), ancestor_(Z, Y).
 
 % 1. Define the predicate `cmd/3`, which describes the effect of executing a
 %    command on the stack.
+bool(t).
+bool(f).
+
+expr(X) :- bool(X).
+expr(X) :- number(X).
+expr(X) :- string(X).
+
+
+cmd(C, S1, S2) :- expr(C), S2 = [C|S1].
+
+cmd(add, [C1,C2|S1], S2) :- number(C1), number(C2), Z is C1+C2, S2 = [Z|S1].
+
+cmd(lte, [C1,C2|S1], S2) :- number(C1), number(C2), C1 =< C2, S2 = [t|S1].
+cmd(lte, [C1,C2|S1], S2) :- number(C1), number(C2), S2 = [f|S1].
+
+cmd(if(P1,_), [B|S1], S2) :- bool(B), B = t, prog(P1, S1, S2).
+cmd(if(_,P2), [B|S1], S2) :- bool(B), B = f, prog(P2, S1, S2).
+
 
 
 % 2. Define the predicate `prog/3`, which describes the effect of executing a
 %    program on the stack.
 
-
+prog(C, S1, S2) :- cmd(C, S1, S2).
+prog([C], S1, S2) :- cmd(C, S1, S2).
+prog([C|P], S1, S2) :- cmd(C, S1, F), prog(P, F, S2).
