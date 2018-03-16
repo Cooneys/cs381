@@ -1,6 +1,10 @@
 % Here are a bunch of facts describing the Simpson's family tree.
 % Don't change them!
 
+%% Authors:
+%%   Ethan Braun (braune)
+%%   Samuel Cooney (cooneys)
+
 female(mona).
 female(jackie).
 female(marge).
